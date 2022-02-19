@@ -5,6 +5,12 @@ import express from 'express';
 import { Controller } from './Controller';
 import { middlewares, middlewaresError } from '../middlewares';
 
+/**
+ *
+ *
+ * @export
+ * @class Server
+ */
 export class Server {
     private readonly port: number;
     readonly express: express.Express;
@@ -20,7 +26,9 @@ export class Server {
 
     /**
      *
-     * @param middlewares
+     *
+     * @param {...Middleware[]} middlewares
+     * @memberof Server
      */
     setGlobalMiddleWare(...middlewares: Middleware[]): void {
         this.middlewares.push(...middlewares);
@@ -29,7 +37,9 @@ export class Server {
 
     /**
      *
-     * @param controllers
+     *
+     * @param {Controller<unknown, unknown, unknown>[]} controllers
+     * @memberof Server
      */
     setControllers(controllers: Controller<unknown, unknown, unknown>[]): void {
         this.controllers.push(...controllers);
@@ -40,7 +50,9 @@ export class Server {
 
     /**
      *
-     * @param callback
+     *
+     * @param {() => void} [callback]
+     * @memberof Server
      */
     run(callback?: () => void): void {
         this.express.use(...middlewaresError);

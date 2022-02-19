@@ -27,21 +27,49 @@ export const LOG_COLOR = {
 class Logger {
     static isProduction = process.env['NODE_ENV'] === 'production';
 
+    /**
+     *
+     *
+     * @static
+     * @param {...unknown[]} data
+     * @memberof Logger
+     */
     static info(...data: unknown[]): void {
         console.info(LOG_COLOR.FgGreen, Logger.getTime(), ...data);
     }
 
+    /**
+     *
+     *
+     * @static
+     * @return {*}  {string}
+     * @memberof Logger
+     */
     static getTime(): string {
         const now = new Date();
         return `[${now.toLocaleDateString()} - ${now.toLocaleTimeString()}]`;
     }
 
+    /**
+     *
+     *
+     * @static
+     * @param {...unknown[]} data
+     * @memberof Logger
+     */
     static debug(...data: unknown[]): void {
         if (!Logger.isProduction) {
             console.debug(LOG_COLOR.FgYellow, Logger.getTime(), ...data);
         }
     }
 
+    /**
+     *
+     *
+     * @static
+     * @param {...unknown[]} data
+     * @memberof Logger
+     */
     static error(...data: unknown[]): void {
         console.error(LOG_COLOR.FgRed, Logger.getTime(), ...data);
     }

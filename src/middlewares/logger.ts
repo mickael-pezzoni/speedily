@@ -1,6 +1,12 @@
 import Logger from '../utils/Logger';
 import { NextFunction, Request, Response } from 'express';
 
+/**
+ *
+ *
+ * @param {[number, number]} start
+ * @return {*}
+ */
 function getDurationTime(start: [number, number]) {
     const NS_PER_SEC = 1e9;
     const NS_TO_MS = 1e6;
@@ -8,6 +14,13 @@ function getDurationTime(start: [number, number]) {
 
     return (diff[0] * NS_PER_SEC + diff[1]) / NS_TO_MS;
 }
+/**
+ *
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function logRequest(req: Request, res: Response, next: NextFunction): void {
     const start = process.hrtime();
     res.on('finish', () => {

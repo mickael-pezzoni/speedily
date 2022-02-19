@@ -2,6 +2,15 @@ import { NextFunction, Request, Response } from 'express';
 import { HttpError } from '../classes/HttpError';
 import Logger from '../utils/Logger';
 
+/**
+ *
+ *
+ * @export
+ * @param {HttpError} err
+ * @param {Request} _req
+ * @param {Response} _res
+ * @param {NextFunction} next
+ */
 export function logError(
     err: HttpError,
     _req: Request,
@@ -11,7 +20,15 @@ export function logError(
     Logger.error(JSON.stringify(err));
     next();
 }
-
+/**
+ *
+ *
+ * @export
+ * @param {HttpError} err
+ * @param {Request} _req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 export function errorHandler(
     err: HttpError,
     _req: Request,

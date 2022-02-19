@@ -25,6 +25,12 @@ export type ParamType = string;
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface RouteOption {}
 
+/**
+ *
+ *
+ * @export
+ * @enum {number}
+ */
 export enum HttpResponseCode {
     INTERNAL_ERROR = 500,
     NOT_IMPLEMENTED_ERROR = 501,
@@ -35,6 +41,12 @@ export enum HttpResponseCode {
     SUCCESS = 200,
 }
 
+/**
+ *
+ *
+ * @export
+ * @interface ExpressError
+ */
 export interface ExpressError {
     throwAt: Date;
     msg: string;
