@@ -2,9 +2,13 @@
     "name": "turbo",
     "version": "1.0.0",
     "description": "",
-    "main": "dist/main.js",
+    "main": "lib/main.js",
+    "types": "lib/main.d.ts",
+    "files": [
+        "./lib"
+    ],
     "scripts": {
-        "build": "rimraf dist && tsc",
+        "build": "rimraf lib && tsc",
         "start": "ts-node-dev --respawn -- src/main.ts",
         "lint": "eslint . --ext .ts",
         "prettier": "prettier --write ./src",
@@ -16,10 +20,7 @@
     "license": "ISC",
     "dependencies": {
         "express": "^4.17.2",
-        "r": "^0.0.5",
-        "reflect-metadata": "^0.1.13",
-        "tsc": "^2.0.4",
-        "typescript": "^4.5.5"
+        "reflect-metadata": "^0.1.13"
     },
     "devDependencies": {
         "@commitlint/cli": "^16.2.1",
@@ -35,6 +36,7 @@
         "husky": "^7.0.4",
         "prettier": "^2.5.1",
         "rimraf": "^3.0.2",
-        "ts-node-dev": "^1.1.8"
+        "ts-node-dev": "^1.1.8",
+        "typescript": "^4.5.5"
     }
 }

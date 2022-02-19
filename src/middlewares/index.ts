@@ -1,3 +1,5 @@
+import { errorHandler, logError } from './error';
 import logRequest from './logger';
 
-export default [logRequest];
+export const middlewares = [logRequest];
+export const middlewaresError = [errorHandler, logError];

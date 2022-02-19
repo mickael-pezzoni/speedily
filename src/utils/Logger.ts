@@ -42,7 +42,7 @@ class Logger {
         }
     }
 
-    static error(data: unknown[]): void {
+    static error(...data: unknown[]): void {
         console.error(LOG_COLOR.FgRed, Logger.getTime(), ...data);
     }
 }
