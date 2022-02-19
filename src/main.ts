@@ -26,8 +26,8 @@ const authController = new Controller('/auth')
     .post('/signup', signup);
 
 const productController = new Controller('/products')
-    .get('/', {}, getProducts)
-    .get('/:id', {}, getProduct);
+    .get('/', getProducts)
+    .get('/:id', getProduct);
 
 const controllers = [authController, productController];
 

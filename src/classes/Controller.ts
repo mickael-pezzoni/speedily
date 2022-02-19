@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { Middleware, RouteOption } from '../types';
+import { Middleware } from '../types';
 import { Delete, Get, Patch, Post, Put, Route } from './Route';
 import Logger from '../utils/Logger';
 
@@ -56,14 +56,12 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      *
      *
      * @param {string} endPoint
-     * @param {RouteOption} [_routeOptions]
      * @param {...Middleware[]} middlewares
      * @return {*}  {Controller<Entity, CreateDto, UpdateDto>}
      * @memberof Controller
      */
     get(
         endPoint: string,
-        _routeOptions?: RouteOption,
         ...middlewares: Middleware[]
     ): Controller<Entity, CreateDto, UpdateDto> {
         const route = new Get(endPoint, ...middlewares);
@@ -76,14 +74,12 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      *
      *
      * @param {string} endPoint
-     * @param {RouteOption} [_routeOptions]
      * @param {...Middleware[]} middlewares
      * @return {*}  {Controller<Entity, CreateDto, UpdateDto>}
      * @memberof Controller
      */
     post(
         endPoint: string,
-        _routeOptions?: RouteOption,
         ...middlewares: Middleware[]
     ): Controller<Entity, CreateDto, UpdateDto> {
         const route = new Post(endPoint, ...middlewares);
@@ -96,14 +92,12 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      *
      *
      * @param {string} endPoint
-     * @param {RouteOption} [_routeOptions]
      * @param {...Middleware[]} middlewares
      * @return {*}  {Controller<Entity, CreateDto, UpdateDto>}
      * @memberof Controller
      */
     put(
         endPoint: string,
-        _routeOptions?: RouteOption,
         ...middlewares: Middleware[]
     ): Controller<Entity, CreateDto, UpdateDto> {
         this.router.put(endPoint, ...middlewares);
@@ -117,14 +111,12 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      *
      *
      * @param {string} endPoint
-     * @param {RouteOption} [_routeOptions]
      * @param {...Middleware[]} middlewares
      * @return {*}  {Controller<Entity, CreateDto, UpdateDto>}
      * @memberof Controller
      */
     patch(
         endPoint: string,
-        _routeOptions?: RouteOption,
         ...middlewares: Middleware[]
     ): Controller<Entity, CreateDto, UpdateDto> {
         this.router.patch(endPoint, ...middlewares);
@@ -138,14 +130,12 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      *
      *
      * @param {string} endPoint
-     * @param {RouteOption} [_routeOptions]
      * @param {...Middleware[]} middlewares
      * @return {*}  {Controller<Entity, CreateDto, UpdateDto>}
      * @memberof Controller
      */
     delete(
         endPoint: string,
-        _routeOptions?: RouteOption,
         ...middlewares: Middleware[]
     ): Controller<Entity, CreateDto, UpdateDto> {
         this.router.delete(endPoint, ...middlewares);
