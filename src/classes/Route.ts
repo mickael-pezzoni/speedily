@@ -97,7 +97,7 @@ export class Post extends Route {
             this.endPoint,
             ...this.middlewares,
             (req: Request, res: Response, next: NextFunction) =>
-                execRequestFunction(req, res, next, this.requestFunction)
+                execRequestFunction(req, res, next, this.requestFunction, true)
         );
     }
     constructor(
@@ -121,7 +121,7 @@ export class Put extends Route {
             this.endPoint,
             ...this.middlewares,
             (req: Request, res: Response, next: NextFunction) =>
-                execRequestFunction(req, res, next, this.requestFunction)
+                execRequestFunction(req, res, next, this.requestFunction, true)
         );
     }
     constructor(
@@ -146,7 +146,7 @@ export class Patch extends Route {
             this.endPoint,
             ...this.middlewares,
             (req: Request, res: Response, next: NextFunction) =>
-                execRequestFunction(req, res, next, this.requestFunction)
+                execRequestFunction(req, res, next, this.requestFunction, true)
         );
     }
     constructor(

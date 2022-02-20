@@ -6,10 +6,14 @@ export async function execRequestFunction(
     req: Request,
     res: Response,
     next: NextFunction,
-    requestFunction: RequestFunction | BodyRequestFunction
+    requestFunction: RequestFunction | BodyRequestFunction,
+    isPostRequest = false
 ): Promise<void> {
     try {
-        const results = await (isBodyRequestFunction(requestFunction)
+        const results = await (isBodyRequestFunction(
+            requestFunction,
+            isPostRequest
+        )
             ? requestFunction(req.params, req.body, req.query)
             : (requestFunction as RequestFunction)(req.params, req.query));
 
@@ -20,7 +24,8 @@ export async function execRequestFunction(
 }
 
 function isBodyRequestFunction(
-    requestFunction: RequestFunction | BodyRequestFunction
-): requestFunction is BodyRequestFunction {
-    return requestFunction.length > 2;
+    _requestFunction: RequestFunction | BodyRequestFunction,
+    isPostRequest: boolean
+): _requestFunction is BodyRequestFunction {
+    return isPostRequest;
 }
