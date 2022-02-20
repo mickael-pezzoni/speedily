@@ -17,13 +17,22 @@
 ## Install
 
 ```sh
-npm install
+npm install speedily
 ```
 
 ## Usage
 
-```sh
-npm run start
+```ts
+import { Server, Controller } from "speedily";
+
+const server = new Server(3000);
+
+const homeController = new Controller("/home").get("/", () => {
+  return "Home";
+});
+
+server.run();
+
 ```
 
 ## Author
