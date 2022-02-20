@@ -31,6 +31,8 @@ const homeController = new Controller("/home").get("/", () => {
   return "Home";
 });
 
+server.setControllers([homeController]);
+
 server.run();
 
 ```
