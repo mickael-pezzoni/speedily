@@ -17,6 +17,7 @@
         "lint": "eslint src --ext .ts",
         "doc": "typedoc src/index.ts",
         "prettier": "prettier --write ./src",
+        "prepublish": "npm run build",
         "pre-commit": "npm run lint && npm run prettier && rimraf doc && npm run doc",
         "prepare": "husky install"
     },

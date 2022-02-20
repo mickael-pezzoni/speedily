@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { BodyRequestFunction, RequestFunction } from 'src/types';
+import { BodyRequestFunction, RequestFunction } from 'types';
 import { makeError } from './error.util';
 
 export async function execRequestFunction(
