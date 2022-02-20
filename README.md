@@ -12,7 +12,7 @@
   </a>
 </p>
 
-> Speedily allows you to quickly create an express server with minimal code
+> **Speedily** allows you to quickly create an express server with minimal code
 
 ## Install
 
@@ -53,6 +53,3 @@ Give a ⭐️ if this project helped you!
 
 Copyright © 2022 [Mickael Pezzoni](https://github.com/mickael-pezzoni).<br />
 This project is [ISC](https://github.com/mickael-pezzoni/turbo/blob/master/LICENSE) licensed.
-
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
