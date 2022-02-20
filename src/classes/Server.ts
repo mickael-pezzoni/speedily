@@ -33,7 +33,6 @@ export class Server {
     setGlobalMiddleWare(...middlewares: Middleware[]): void {
         this.middlewares.push(...middlewares);
         this.express.use(...middlewares);
-        this.express.use(express.json());
     }
 
     /**
