@@ -31,10 +31,10 @@ export function logError(
  */
 export function errorHandler(
     err: HttpError,
-    _req: Request,
+    req: Request,
     res: Response,
     next: NextFunction
 ): void {
-    res.status(err.httpCode).send(err);
+    res.status(err.httpCode).send({ ...err, url: req.originalUrl });
     next(err);
 }

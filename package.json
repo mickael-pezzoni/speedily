@@ -2,15 +2,15 @@
     "name": "turbo",
     "version": "1.0.0",
     "description": "",
-    "main": "lib/main.js",
-    "types": "lib/main.d.ts",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
     "files": [
         "./lib"
     ],
     "scripts": {
         "build": "rimraf lib && tsc",
         "start": "ts-node-dev --respawn -- src/main.ts",
-        "lint": "eslint . --ext .ts",
+        "lint": "eslint src --ext .ts",
         "prettier": "prettier --write ./src",
         "pre-commit": "npm run lint && npm run prettier",
         "prepare": "husky install"
