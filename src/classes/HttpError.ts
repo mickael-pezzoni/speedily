@@ -22,7 +22,7 @@ export class HttpError extends Error implements ExpressError {
         if (httpCode === HttpResponseCode.INTERNAL_ERROR) {
             Error.captureStackTrace(this);
         }
-        Object.setPrototypeOf(this, this.constructor);
+        Object.setPrototypeOf(this, this.constructor.prototype);
     }
 }
 

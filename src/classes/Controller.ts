@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { Middleware } from '../types';
+import { BodyRequestFunction, RequestFunction, Middleware } from '../types';
 import { Delete, Get, Patch, Post, Put, Route } from './Route';
-import Logger from '../utils/Logger';
+import Logger from '../utils/Logger.util';
 
 /**
  *
@@ -62,9 +62,10 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      */
     get(
         endPoint: string,
+        requestFunction: RequestFunction,
         ...middlewares: Middleware[]
     ): Controller<Entity, CreateDto, UpdateDto> {
-        const route = new Get(endPoint, ...middlewares);
+        const route = new Get(endPoint, requestFunction, ...middlewares);
         this.addRoute(route);
 
         return this;
@@ -80,9 +81,10 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      */
     post(
         endPoint: string,
+        requestFunction: BodyRequestFunction,
         ...middlewares: Middleware[]
     ): Controller<Entity, CreateDto, UpdateDto> {
-        const route = new Post(endPoint, ...middlewares);
+        const route = new Post(endPoint, requestFunction, ...middlewares);
         this.addRoute(route);
 
         return this;
@@ -98,10 +100,10 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      */
     put(
         endPoint: string,
+        requestFunction: BodyRequestFunction,
         ...middlewares: Middleware[]
     ): Controller<Entity, CreateDto, UpdateDto> {
-        this.router.put(endPoint, ...middlewares);
-        const route = new Put(endPoint);
+        const route = new Put(endPoint, requestFunction, ...middlewares);
         this.addRoute(route);
 
         return this;
@@ -117,10 +119,10 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      */
     patch(
         endPoint: string,
+        requestFunction: BodyRequestFunction,
         ...middlewares: Middleware[]
     ): Controller<Entity, CreateDto, UpdateDto> {
-        this.router.patch(endPoint, ...middlewares);
-        const route = new Patch(endPoint);
+        const route = new Patch(endPoint, requestFunction, ...middlewares);
         this.addRoute(route);
 
         return this;
@@ -136,10 +138,10 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      */
     delete(
         endPoint: string,
+        requestFunction: RequestFunction,
         ...middlewares: Middleware[]
     ): Controller<Entity, CreateDto, UpdateDto> {
-        this.router.delete(endPoint, ...middlewares);
-        const route = new Delete(endPoint);
+        const route = new Delete(endPoint, requestFunction, ...middlewares);
         this.addRoute(route);
 
         return this;

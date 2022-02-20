@@ -1,4 +1,4 @@
-import { HttpError, InternalError } from 'src/classes/HttpError';
+import { HttpError, InternalError } from '../classes/HttpError';
 
 /**
  *

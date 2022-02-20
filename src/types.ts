@@ -25,6 +25,20 @@ export type ParamType = string;
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface RouteOption {}
 
+export type RequestFunction = (
+    params: Params,
+    queryParams: QueryParams
+) => unknown;
+
+export type BodyRequestFunction = (
+    params: Params,
+    body: Body,
+    queryParams: QueryParams
+) => unknown;
+
+export type Params = Record<string, unknown>;
+export type QueryParams = Record<string, unknown>;
+export type Body = Record<string, unknown>;
 /**
  *
  *

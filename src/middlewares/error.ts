@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { HttpError } from '../classes/HttpError';
-import Logger from '../utils/Logger';
+import Logger from '../utils/Logger.util';
 
 /**
  *

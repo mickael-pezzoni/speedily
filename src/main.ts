@@ -1,14 +1,18 @@
-import { Request, Response, NextFunction } from 'express';
 import { Controller } from './classes/Controller';
 import { NotFoundError } from './classes/HttpError';
 import { Delete } from './classes/Route';
+
+import { Server } from './classes/Server';
+import { Params } from './types';
+
+const server = new Server(3000);
+
 // export * from './classes/Server';
 // export * from './classes/Controller';
 // export * from './classes/Route';
 // export * from './types';
-import { Server } from './classes/Server';
-
-const server = new Server(3000);
+// export * from './utils/error';
+// export * from './classes/HttpError';
 
 interface Product {
     id: number;
@@ -22,11 +26,11 @@ const products: Product[] = [
 ];
 
 const authController = new Controller('/auth')
-    .post('/signin', signin)
-    .post('/signup', signup);
+    .post('/signin', () => 'Signin')
+    .post('/signup', () => 'Signup');
 
 const productController = new Controller('/products')
-    .get('/', getProducts)
+    .get('/', () => products)
     .get('/:id', getProduct);
 
 const controllers = [authController, productController];
@@ -36,31 +40,26 @@ server.setControllers(controllers);
 
 server.run();
 
-function getProducts(_req: Request, res: Response): void {
-    res.json(products);
+function getProduct(param: Params): Product {
+    const { id } = param;
+    const product = products.find((p) => p.id === +(id as string));
+
+    if (product === undefined) {
+        throw new NotFoundError('Product not found');
+    }
+    return product;
 }
-function getProduct(req: Request, res: Response): void {
-    const { id } = req.params;
-    res.json(products.find((p) => p.id === +(id as string)));
-}
-function deleteProduct(req: Request, res: Response, next: NextFunction): void {
-    const { id } = req.params;
+function deleteProduct(params: Params): string {
+    const { id } = params;
 
     const index = products.findIndex(
         (product) => product.id === +(id as string)
     );
 
     if (index === -1) {
-        next(new NotFoundError('Product not found'));
-        return;
+        throw new NotFoundError('Product not found');
     }
     products.splice(index, 1);
-    res.send('Product deleted');
-}
-function signin(_req: Request, res: Response): void {
-    res.send('SIgnin');
-}
 
-function signup(_req: Request, res: Response): void {
-    res.send('Signup');
+    return 'Product deleted';
 }
