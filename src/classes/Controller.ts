@@ -56,6 +56,7 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      *
      *
      * @param {string} endPoint
+     * @param {RequestFunction} requestFunction
      * @param {...Middleware[]} middlewares
      * @return {*}  {Controller<Entity, CreateDto, UpdateDto>}
      * @memberof Controller
@@ -75,6 +76,7 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      *
      *
      * @param {string} endPoint
+     * @param {BodyRequestFunction} requestFunction
      * @param {...Middleware[]} middlewares
      * @return {*}  {Controller<Entity, CreateDto, UpdateDto>}
      * @memberof Controller
@@ -94,6 +96,7 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      *
      *
      * @param {string} endPoint
+     * @param {BodyRequestFunction} requestFunction
      * @param {...Middleware[]} middlewares
      * @return {*}  {Controller<Entity, CreateDto, UpdateDto>}
      * @memberof Controller
@@ -113,6 +116,7 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      *
      *
      * @param {string} endPoint
+     * @param {BodyRequestFunction} requestFunction
      * @param {...Middleware[]} middlewares
      * @return {*}  {Controller<Entity, CreateDto, UpdateDto>}
      * @memberof Controller
@@ -132,6 +136,7 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      *
      *
      * @param {string} endPoint
+     * @param {RequestFunction} requestFunction
      * @param {...Middleware[]} middlewares
      * @return {*}  {Controller<Entity, CreateDto, UpdateDto>}
      * @memberof Controller

@@ -28,17 +28,17 @@ export interface RouteOption {}
 export type RequestFunction = (
     params: Params,
     queryParams: QueryParams
-) => unknown;
+) => Promise<unknown> | unknown;
 
 export type BodyRequestFunction = (
     params: Params,
     body: Body,
     queryParams: QueryParams
-) => unknown;
+) => Promise<unknown> | unknown;
 
 export type Params = Record<string, unknown>;
 export type QueryParams = Record<string, unknown>;
-export type Body = Record<string, unknown>;
+export type Body = unknown;
 /**
  *
  *
