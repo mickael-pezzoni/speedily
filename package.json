@@ -5,11 +5,12 @@
     "main": "lib/index.js",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/mickael-pezzoni/turbo"
+        "url": "git+https://github.com/mickael-pezzoni/speedily"
     },
     "types": "lib/index.d.ts",
     "files": [
-        "./lib"
+        "lib",
+        "node_modules"
     ],
     "scripts": {
         "build": "rimraf lib && tsc",
