@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { NextFunction, Request, Response } from 'express';
 import { HttpError } from './classes/HttpError';
 
@@ -20,11 +21,6 @@ export type FullEntity<T> = {
     [key in keyof T]-?: T[key];
 };
 
-export type ParamType = string;
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface RouteOption {}
-
 export type RequestFunction = (
     params: Params,
     queryParams: QueryParams
@@ -36,7 +32,7 @@ export type BodyRequestFunction = (
     queryParams: QueryParams
 ) => Promise<unknown> | unknown;
 
-export type Params = Record<string, unknown>;
+export type Params = Record<string, string>;
 export type QueryParams = Record<string, unknown>;
 export type Body = unknown;
 /**
