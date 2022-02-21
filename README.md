@@ -36,6 +36,7 @@ server.setControllers([homeController]);
 server.run();
 
 ```
+A more complete example [here](https://github.com/mickael-pezzoni/example-speedily)
 
 ## Author
 
