@@ -11,9 +11,13 @@ import { ExpressError, HttpResponseCode } from '../types';
 export class HttpError extends Error implements ExpressError {
     throwAt: Date;
     msg: string;
-    httpCode: HttpResponseCode;
+    httpCode: HttpResponseCode | number;
 
-    constructor(httpCode: HttpResponseCode, msg: string, stack?: string) {
+    constructor(
+        httpCode: HttpResponseCode | number,
+        msg: string,
+        stack?: string
+    ) {
         super(msg);
         this.msg = msg;
         this.httpCode = httpCode;

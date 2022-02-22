@@ -8,11 +8,8 @@ import Logger from '../utils/Logger.util';
  *
  * @export
  * @class Controller
- * @template Entity
- * @template CreateDto
- * @template UpdateDto
  */
-export class Controller<Entity, CreateDto, UpdateDto> {
+export class Controller {
     private readonly routes: Route[] = [];
     readonly router: Router;
     readonly endPoint: string;
@@ -26,10 +23,10 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      *
      *
      * @param {Route} route
-     * @return {*}  {Controller<Entity, CreateDto, UpdateDto>}
+     * @return {*}  {Controller}
      * @memberof Controller
      */
-    addRoute(route: Route): Controller<Entity, CreateDto, UpdateDto> {
+    addRoute(route: Route): Controller {
         route.registerOn(this.router);
         Logger.debug(
             `Mapping route : ${route.constructor.name} - {${this.endPoint}${route.endPoint}}`
@@ -42,12 +39,10 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      *
      *
      * @param {Middleware} middleware
-     * @return {*}  {Controller<Entity, CreateDto, UpdateDto>}
+     * @return {*}  {Controller}
      * @memberof Controller
      */
-    addMiddleware(
-        middleware: Middleware
-    ): Controller<Entity, CreateDto, UpdateDto> {
+    addMiddleware(middleware: Middleware): Controller {
         this.router.use(middleware);
         return this;
     }
@@ -58,14 +53,14 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      * @param {string} endPoint
      * @param {RequestFunction} requestFunction
      * @param {...Middleware[]} middlewares
-     * @return {*}  {Controller<Entity, CreateDto, UpdateDto>}
+     * @return {*}  {Controller}
      * @memberof Controller
      */
     get(
         endPoint: string,
         requestFunction: RequestFunction,
         ...middlewares: Middleware[]
-    ): Controller<Entity, CreateDto, UpdateDto> {
+    ): Controller {
         const route = new Get(endPoint, requestFunction, ...middlewares);
         this.addRoute(route);
 
@@ -78,14 +73,14 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      * @param {string} endPoint
      * @param {BodyRequestFunction} requestFunction
      * @param {...Middleware[]} middlewares
-     * @return {*}  {Controller<Entity, CreateDto, UpdateDto>}
+     * @return {*}  {Controller}
      * @memberof Controller
      */
     post(
         endPoint: string,
         requestFunction: BodyRequestFunction,
         ...middlewares: Middleware[]
-    ): Controller<Entity, CreateDto, UpdateDto> {
+    ): Controller {
         const route = new Post(endPoint, requestFunction, ...middlewares);
         this.addRoute(route);
 
@@ -98,14 +93,14 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      * @param {string} endPoint
      * @param {BodyRequestFunction} requestFunction
      * @param {...Middleware[]} middlewares
-     * @return {*}  {Controller<Entity, CreateDto, UpdateDto>}
+     * @return {*}  {Controller}
      * @memberof Controller
      */
     put(
         endPoint: string,
         requestFunction: BodyRequestFunction,
         ...middlewares: Middleware[]
-    ): Controller<Entity, CreateDto, UpdateDto> {
+    ): Controller {
         const route = new Put(endPoint, requestFunction, ...middlewares);
         this.addRoute(route);
 
@@ -118,14 +113,14 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      * @param {string} endPoint
      * @param {BodyRequestFunction} requestFunction
      * @param {...Middleware[]} middlewares
-     * @return {*}  {Controller<Entity, CreateDto, UpdateDto>}
+     * @return {*}  {Controller}
      * @memberof Controller
      */
     patch(
         endPoint: string,
         requestFunction: BodyRequestFunction,
         ...middlewares: Middleware[]
-    ): Controller<Entity, CreateDto, UpdateDto> {
+    ): Controller {
         const route = new Patch(endPoint, requestFunction, ...middlewares);
         this.addRoute(route);
 
@@ -138,14 +133,14 @@ export class Controller<Entity, CreateDto, UpdateDto> {
      * @param {string} endPoint
      * @param {RequestFunction} requestFunction
      * @param {...Middleware[]} middlewares
-     * @return {*}  {Controller<Entity, CreateDto, UpdateDto>}
+     * @return {*}  {Controller}
      * @memberof Controller
      */
     delete(
         endPoint: string,
         requestFunction: RequestFunction,
         ...middlewares: Middleware[]
-    ): Controller<Entity, CreateDto, UpdateDto> {
+    ): Controller {
         const route = new Delete(endPoint, requestFunction, ...middlewares);
         this.addRoute(route);
 

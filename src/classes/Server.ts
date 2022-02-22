@@ -14,7 +14,7 @@ import { middlewares, middlewaresError } from '../middlewares';
 export class Server {
     private readonly port: number;
     readonly express: express.Express;
-    private readonly controllers: Controller<unknown, unknown, unknown>[] = [];
+    private readonly controllers: Controller[] = [];
     private readonly environment =
         process.env['NODE_ENV'] ?? 'Node environment not defined';
     private readonly middlewares: Middleware[] = [];
@@ -38,10 +38,10 @@ export class Server {
     /**
      *
      *
-     * @param {Controller<unknown, unknown, unknown>[]} controllers
+     * @param {Controller[]} controllers
      * @memberof Server
      */
-    setControllers(controllers: Controller<unknown, unknown, unknown>[]): void {
+    setControllers(controllers: Controller[]): void {
         this.controllers.push(...controllers);
         this.controllers.forEach((controller) => {
             this.express.use(controller.endPoint, controller.router);
