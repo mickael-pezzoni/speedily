@@ -31,8 +31,7 @@
     "author": "Mickael Pezzoni",
     "license": "ISC",
     "dependencies": {
-        "express": "^4.17.2",
-        "reflect-metadata": "^0.1.13"
+        "express": "^4.17.2"
     },
     "devDependencies": {
         "@commitlint/cli": "^16.2.1",
