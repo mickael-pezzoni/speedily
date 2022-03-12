@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { Context } from './classes/Context';
 import { NextFunction, Request, Response } from 'express';
 import { HttpError } from './classes/HttpError';
 
@@ -22,19 +23,19 @@ export type FullEntity<T> = {
 };
 
 export type RequestFunction = (
-    params: Params,
-    queryParams: QueryParams
+    requestParams: Context
 ) => Promise<unknown> | unknown;
 
-export type BodyRequestFunction = (
-    params: Params,
-    body: Body,
-    queryParams: QueryParams
-) => Promise<unknown> | unknown;
+export interface RouteOptions {
+    queryValidator?: ClassValidator;
+    bodyValidator?: ClassValidator;
+}
 
-export type Params = Record<string, string>;
+export type ClassValidator = new () => object;
+
+export type RouteParams = Record<string, string>;
 export type QueryParams = Record<string, unknown>;
-export type Body = unknown;
+export type RequestBody = Record<string, unknown>;
 /**
  *
  *
@@ -60,5 +61,5 @@ export enum HttpResponseCode {
 export interface ExpressError {
     throwAt: Date;
     msg: string;
-    httpCode: HttpResponseCode;
+    httpCode: HttpResponseCode | number;
 }

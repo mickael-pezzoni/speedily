@@ -1,6 +1,6 @@
 {
     "name": "speedily-js",
-    "version": "0.0.3",
+    "version": "0.0.5",
     "description": "speedily-js allows you to quickly create an express server with minimal code",
     "main": "lib/index.js",
     "repository": {
@@ -31,6 +31,7 @@
     "author": "Mickael Pezzoni",
     "license": "ISC",
     "dependencies": {
+        "class-validator": "^0.13.2",
         "express": "^4.17.2"
     },
     "devDependencies": {

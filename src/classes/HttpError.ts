@@ -13,6 +13,13 @@ export class HttpError extends Error implements ExpressError {
     msg: string;
     httpCode: HttpResponseCode | number;
 
+    /**
+     * Creates an instance of HttpError.
+     * @param {(HttpResponseCode | number)} httpCode
+     * @param {string} msg
+     * @param {string} [stack]
+     * @memberof HttpError
+     */
     constructor(
         httpCode: HttpResponseCode | number,
         msg: string,
