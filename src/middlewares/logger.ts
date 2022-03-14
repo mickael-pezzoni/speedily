@@ -1,4 +1,4 @@
-import Logger from '../utils/Logger.util';
+import Logger from '../classes/Logger';
 import { NextFunction, Request, Response } from 'express';
 
 /**

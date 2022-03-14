@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to speedily-js 👋</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.0.4-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-0.0.6-blue.svg?cacheSeconds=2592000" />
   <a href="https://mickael-pezzoni.github.io/speedily-js/" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>

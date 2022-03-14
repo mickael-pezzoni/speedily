@@ -1,5 +1,5 @@
-import { LOG_COLOR } from '../utils/Logger.util';
-import Logger from '../utils/Logger.util';
+import { LOG_COLOR } from './Logger';
+import Logger from './Logger';
 import { Middleware } from '../types';
 import express from 'express';
 import { Controller } from './Controller';

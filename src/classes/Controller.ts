@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { RequestFunction, Middleware, RouteOptions } from '../types';
 import { Delete, Get, Patch, Post, Put, Route } from './Route';
-import Logger from '../utils/Logger.util';
+import Logger from './Logger';
 
 /**
  *

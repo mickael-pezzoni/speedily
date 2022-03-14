@@ -1,6 +1,6 @@
 {
     "name": "speedily-js",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "speedily-js allows you to quickly create an express server with minimal code",
     "main": "lib/index.js",
     "repository": {
