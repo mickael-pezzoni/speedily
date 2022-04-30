@@ -1,9 +1,15 @@
 import { Route } from 'classes/Route';
 import { NextFunction, Request, Response } from 'express';
 
-import { Context } from '../classes/Context';
+import { Context, ResponseWithCode } from '../classes/Context';
 import { RequestBody } from '../types/simple.type';
 import { makeError } from './error.util';
+
+function execRequestFunctionHashStatusCode(
+    value: unknown
+): value is ResponseWithCode {
+    return typeof value === 'object' && 'status' in (value as object);
+}
 
 /**
  *
@@ -28,6 +34,11 @@ export async function execRequestFunction(
         );
         await context.body?.validate(req.body as RequestBody);
         const results = await route.requestFunction(context);
+        if (execRequestFunctionHashStatusCode(results)) {
+            res.status(results.status).send(results.arg);
+
+            return;
+        }
         const responseBody =
             typeof results === 'number' ? results.toString() : results;
         res.send(responseBody);
