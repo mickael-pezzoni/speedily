@@ -12,5 +12,7 @@ export {
 export * from './classes/Logger';
 export { Delete, Get, Patch, Post, Put, Route } from './classes/Route';
 export { Server } from './classes/Server';
+export * from './types/error.type';
+export * from './types/simple.type';
 export * from './types/types';
 export { makeError } from './utils/error.util';
