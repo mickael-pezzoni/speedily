@@ -20,6 +20,7 @@
     -   [Using the parameters](#using-the-parameters)
     -   [Post data](#post-data)
     -   [Throw an error](#throw-an-error)
+    -   [Return a custom http status](#return-a-custom-http-status)
     -   [Authenticate your controllers](#authenticate-your-controllers)
     -   [Authenticate a specific route](#authenticate-a-specific-route)
 -   [Author](#author)
@@ -96,8 +97,6 @@ const productController = new Controller('/products').post(
 
 ### Throw an error
 
->
-
 ```ts
 const productController = new Controller('/products').post(
     '/',
@@ -121,6 +120,17 @@ const productController = new Controller('/products').get(
         throw new CustomError(`Why not`);
         // or
         throw new HttpError(418, 'Why not');
+    }
+);
+```
+
+### Return a custom http status
+
+```ts
+const productController = new Controller('/products').get(
+    '/',
+    (context: Context) => {
+        return { status: 201, arg: {} };
     }
 );
 ```
