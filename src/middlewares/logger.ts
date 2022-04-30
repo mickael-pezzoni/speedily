@@ -1,13 +1,14 @@
-import Logger from '../classes/Logger';
 import { NextFunction, Request, Response } from 'express';
+
+import Logger from '../classes/Logger';
 
 /**
  *
  *
  * @param {[number, number]} start
- * @return {*}
+ * @return {*}  {number}
  */
-function getDurationTime(start: [number, number]) {
+function getDurationTime(start: [number, number]): number {
     const NS_PER_SEC = 1e9;
     const NS_TO_MS = 1e6;
     const diff = process.hrtime(start);
@@ -28,7 +29,7 @@ function logRequest(req: Request, res: Response, next: NextFunction): void {
         Logger.info(
             `${req.method} ${
                 req.originalUrl
-            } [FINISHED] ${durationInMilliseconds.toLocaleString()} ms`
+            } ⌛ [FINISHED] ${durationInMilliseconds.toLocaleString()} ms`
         );
     });
 
@@ -37,7 +38,7 @@ function logRequest(req: Request, res: Response, next: NextFunction): void {
         Logger.info(
             `${req.method} ${
                 req.originalUrl
-            } [CLOSED] ${durationInMilliseconds.toLocaleString()} ms`
+            } ⌛ [CLOSED] ${durationInMilliseconds.toLocaleString()} ms`
         );
     });
 

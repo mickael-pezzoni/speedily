@@ -1,7 +1,9 @@
-import { Context } from '../classes/Context';
-import { Request, Response, NextFunction } from 'express';
-import { makeError } from './error.util';
 import { Route } from 'classes/Route';
+import { NextFunction, Request, Response } from 'express';
+
+import { Context } from '../classes/Context';
+import { RequestBody } from '../types/simple.type';
+import { makeError } from './error.util';
 
 /**
  *
@@ -21,8 +23,10 @@ export async function execRequestFunction(
 ): Promise<void> {
     try {
         const context = new Context(req, route.routeOptions);
-        await context.queryParams.validate(req.query);
-        await context.body.validate(req.body);
+        await context.queryParams.validate(
+            req.query as Record<PropertyKey, unknown>
+        );
+        await context.body?.validate(req.body as RequestBody);
         const results = await route.requestFunction(context);
         const responseBody =
             typeof results === 'number' ? results.toString() : results;

@@ -1,8 +1,9 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Middleware, RequestFunction, RouteOptions } from './../types';
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { NextFunction, Request, Response, Router } from 'express';
+
+import { Middleware } from '../types/types';
 import { execRequestFunction } from '../utils/route.util';
+import { BodyRouteOptions, RequestFunction, RouteOptions } from './Context';
 
 /**
  *
@@ -12,9 +13,34 @@ import { execRequestFunction } from '../utils/route.util';
  * @class Route
  */
 export abstract class Route {
-    private readonly _endPoint: string;
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof Route
+     */
+    readonly endPoint: string;
+    /**
+     *
+     *
+     * @protected
+     * @type {Middleware[]}
+     * @memberof Route
+     */
     protected readonly middlewares: Middleware[] = [];
+    /**
+     *
+     *
+     * @type {RequestFunction}
+     * @memberof Route
+     */
     readonly requestFunction: RequestFunction;
+    /**
+     *
+     *
+     * @type {RouteOptions}
+     * @memberof Route
+     */
     readonly routeOptions: RouteOptions;
 
     /**
@@ -31,21 +57,10 @@ export abstract class Route {
         routeOptions: RouteOptions = {},
         ...middlewares: Middleware[]
     ) {
-        this._endPoint = endPoint;
+        this.endPoint = endPoint;
         this.routeOptions = routeOptions;
         this.middlewares = middlewares;
         this.requestFunction = requestFunction;
-    }
-
-    /**
-     *
-     *
-     * @readonly
-     * @type {string}
-     * @memberof Route
-     */
-    get endPoint(): string {
-        return this._endPoint;
     }
 
     /**
@@ -55,8 +70,17 @@ export abstract class Route {
      * @param {Router} router
      * @memberof Route
      */
-    // eslint-disable-next-line no-unused-vars
     abstract registerOn(router: Router): void;
+
+    /**
+     *
+     *
+     * @param {...Middleware[]} middlewares
+     * @memberof Route
+     */
+    setMiddlewares(...middlewares: Middleware[]): void {
+        this.middlewares.push(...middlewares);
+    }
 }
 
 /**
@@ -108,6 +132,12 @@ export class Get extends Route {
  * @extends {Route}
  */
 export class Post extends Route {
+    /**
+     *
+     *
+     * @param {Router} router
+     * @memberof Post
+     */
     registerOn(router: Router): void {
         router.post(
             this.endPoint,
@@ -121,19 +151,20 @@ export class Post extends Route {
      * Creates an instance of Post.
      * @param {string} endPoint
      * @param {RequestFunction} requestFunction
-     * @param {RouteOptions} [routeOptions]
+     * @param {BodyRouteOptions} [routeOptions]
      * @param {...Middleware[]} middlewares
      * @memberof Post
      */
     constructor(
         endPoint: string,
         requestFunction: RequestFunction,
-        routeOptions?: RouteOptions,
+        routeOptions?: BodyRouteOptions,
         ...middlewares: Middleware[]
     ) {
         super(endPoint, requestFunction, routeOptions, ...middlewares);
     }
 }
+
 /**
  *
  *
@@ -142,6 +173,12 @@ export class Post extends Route {
  * @extends {Route}
  */
 export class Put extends Route {
+    /**
+     *
+     *
+     * @param {Router} router
+     * @memberof Put
+     */
     registerOn(router: Router): void {
         router.put(
             this.endPoint,
@@ -154,14 +191,14 @@ export class Put extends Route {
      * Creates an instance of Put.
      * @param {string} endPoint
      * @param {RequestFunction} requestFunction
-     * @param {RouteOptions} [routeOptions]
+     * @param {BodyRouteOptions} [routeOptions]
      * @param {...Middleware[]} middlewares
      * @memberof Put
      */
     constructor(
         endPoint: string,
         requestFunction: RequestFunction,
-        routeOptions?: RouteOptions,
+        routeOptions?: BodyRouteOptions,
         ...middlewares: Middleware[]
     ) {
         super(endPoint, requestFunction, routeOptions, ...middlewares);
@@ -176,6 +213,12 @@ export class Put extends Route {
  * @extends {Route}
  */
 export class Patch extends Route {
+    /**
+     *
+     *
+     * @param {Router} router
+     * @memberof Patch
+     */
     registerOn(router: Router): void {
         router.patch(
             this.endPoint,
@@ -188,14 +231,14 @@ export class Patch extends Route {
      * Creates an instance of Patch.
      * @param {string} endPoint
      * @param {RequestFunction} requestFunction
-     * @param {RouteOptions} [routeOptions]
+     * @param {BodyRouteOptions} [routeOptions]
      * @param {...Middleware[]} middlewares
      * @memberof Patch
      */
     constructor(
         endPoint: string,
         requestFunction: RequestFunction,
-        routeOptions?: RouteOptions,
+        routeOptions?: BodyRouteOptions,
         ...middlewares: Middleware[]
     ) {
         super(endPoint, requestFunction, routeOptions, ...middlewares);

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 export const LOG_COLOR = {
     Reset: '\x1b[0m',
     Bright: '\x1b[1m',
@@ -24,7 +25,18 @@ export const LOG_COLOR = {
     BgWhite: '\x1b[47m',
 } as const;
 
+/**
+ *
+ *
+ * @class Logger
+ */
 class Logger {
+    /**
+     *
+     *
+     * @static
+     * @memberof Logger
+     */
     static isProduction = process.env['NODE_ENV'] === 'production';
 
     /**
@@ -71,7 +83,7 @@ class Logger {
      * @memberof Logger
      */
     static error(...data: unknown[]): void {
-        console.error(LOG_COLOR.FgRed, Logger.getTime(), ...data);
+        console.error(`⛔ ${LOG_COLOR.FgRed}`, Logger.getTime(), ...data);
     }
 }
 

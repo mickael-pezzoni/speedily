@@ -1,53 +1,56 @@
-import { Validator } from './Validator';
-import { ClassValidator, RequestBody, RouteOptions } from './../types';
-import { BadRequestError } from './HttpError';
-import { RouteParams, QueryParams } from 'types';
 import { Request } from 'express';
+
+import {
+    ClassValidator,
+    QueryParams,
+    RequestBody,
+    RouteData,
+    RouteParams,
+} from '../types/simple.type';
+import { BadRequestError } from './HttpError';
+import { Validator } from './Validator';
 
 /**
  *
  *
  * @export
- * @class Context
+ * @interface RouteOptions
  */
-export class Context {
-    readonly params: Params;
-    readonly queryParams: Params;
-    private readonly routeOptions: RouteOptions;
-    readonly body: Body;
-    /**
-     *
-     *
-     * @type {Request}
-     * @memberof Context
-     */
-    readonly request: Request;
-
-    /**
-     * Creates an instance of Context.
-     * @param {Request} request
-     * @param {RouteOptions} routeOptions
-     * @memberof Context
-     */
-    constructor(request: Request, routeOptions: RouteOptions) {
-        this.request = request;
-        this.routeOptions = routeOptions;
-        this.params = new Params(request.params);
-        this.queryParams = new Params(
-            request.query,
-            routeOptions.queryValidator
-        );
-        this.body = new Body(request.body, this.routeOptions.bodyValidator);
-    }
+export interface RouteOptions {
+    queryValidator?: ClassValidator;
+    bearerAuthFnt?: FntAuth;
+    data?: RouteData;
 }
 
 /**
  *
  *
- * @class Params
+ * @export
+ * @interface BodyRouteOptions
+ * @extends {RouteOptions}
  */
-class Params extends Validator {
+export interface BodyRouteOptions extends RouteOptions {
+    bodyValidator?: ClassValidator;
+}
+
+export type RequestFunction = (
+    requestParams: Context
+) => Promise<unknown> | unknown;
+
+export type FntAuth = (
+    jwt: string,
+    context: Context
+) => Promise<boolean | void> | boolean;
+
+/**
+ *
+ *
+ * @class Params
+ * @extends {Validator}
+ */
+export class Params extends Validator {
     readonly routeParams: RouteParams | QueryParams;
+
     /**
      * Creates an instance of Params.
      * @param {(RouteParams | QueryParams)} routeParams
@@ -96,7 +99,7 @@ class Params extends Validator {
  * @class Body
  * @extends {Validator}
  */
-class Body extends Validator {
+export class Body extends Validator {
     private readonly body: RequestBody;
     /**
      * Creates an instance of Body.
@@ -109,7 +112,100 @@ class Body extends Validator {
         this.body = body;
     }
 
+    /**
+     *
+     *
+     * @template T
+     * @return {*}  {T}
+     * @memberof Body
+     */
     get<T>(): T {
         return this.body as T;
+    }
+}
+
+/**
+ *
+ *
+ * @export
+ * @class Context
+ */
+export class Context {
+    /**
+     *
+     *
+     * @type {Params}
+     * @memberof Context
+     */
+    readonly params: Params;
+    /**
+     *
+     *
+     * @type {Params}
+     * @memberof Context
+     */
+    readonly queryParams: Params;
+    /**
+     *
+     *
+     * @private
+     * @type {RouteOptions}
+     * @memberof Context
+     */
+    private readonly routeOptions: RouteOptions;
+    /**
+     *
+     *
+     * @type {Body}
+     * @memberof Context
+     */
+    readonly body: Body;
+
+    /**
+     *
+     *
+     * @type {Request}
+     * @memberof Context
+     */
+    readonly request: Request;
+
+    /**
+     * Creates an instance of Context.
+     * @param {Request} request
+     * @param {RouteOptions} routeOptions
+     * @memberof Context
+     */
+    constructor(request: Request, routeOptions: RouteOptions) {
+        this.request = request;
+        this.routeOptions = routeOptions;
+        this.params = new Params(request.params);
+        this.queryParams = new Params(
+            request.query,
+            routeOptions.queryValidator
+        );
+
+        this.body = new Body(
+            request.body as Record<PropertyKey, unknown>,
+            this.routeHasBody(this.routeOptions)
+                ? this.routeOptions.bodyValidator
+                : undefined
+        );
+    }
+
+    private routeHasBody(
+        routeOptions: RouteOptions
+    ): routeOptions is BodyRouteOptions {
+        return 'bodyValidator' in routeOptions;
+    }
+
+    /**
+     *
+     *
+     * @readonly
+     * @type {(RouteData | undefined)}
+     * @memberof Context
+     */
+    get data(): RouteData | undefined {
+        return this.routeOptions.data;
     }
 }

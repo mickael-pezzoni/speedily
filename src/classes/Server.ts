@@ -1,9 +1,10 @@
-import { LOG_COLOR } from './Logger';
-import Logger from './Logger';
-import { Middleware } from '../types';
 import express from 'express';
-import { Controller } from './Controller';
+
 import { middlewares, middlewaresError } from '../middlewares';
+import { Middleware } from '../types/types';
+import { FntAuth } from './Context';
+import { Controller } from './Controller';
+import Logger, { LOG_COLOR } from './Logger';
 
 /**
  *
@@ -27,12 +28,12 @@ export class Server {
     /**
      *
      *
-     * @param {...Middleware[]} middlewares
+     * @param {...Middleware[]} newMiddlewares
      * @memberof Server
      */
-    setGlobalMiddleWare(...middlewares: Middleware[]): void {
-        this.middlewares.push(...middlewares);
-        this.express.use(...middlewares);
+    setGlobalMiddleWare(...newMiddlewares: Middleware[]): void {
+        this.middlewares.push(...newMiddlewares);
+        this.express.use(...newMiddlewares);
     }
 
     /**
@@ -46,6 +47,22 @@ export class Server {
         this.controllers.forEach((controller) => {
             this.express.use(controller.endPoint, controller.router);
         });
+    }
+
+    /**
+     *
+     *
+     * @param {FntAuth} authFnt
+     * @param {Controller[]} [controllers=this.controllers]
+     * @memberof Server
+     */
+    enableBearerAuth(
+        authFnt: FntAuth,
+        controllers: Controller[] = this.controllers
+    ): void {
+        controllers.forEach((controller) =>
+            controller.enableBearerAuth(authFnt)
+        );
     }
 
     /**

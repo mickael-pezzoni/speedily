@@ -1,7 +1,15 @@
 import { Router } from 'express';
-import { RequestFunction, Middleware, RouteOptions } from '../types';
-import { Delete, Get, Patch, Post, Put, Route } from './Route';
+
+import { bearerAuth } from '../middlewares/auth';
+import { Middleware } from '../types/types';
+import {
+    BodyRouteOptions,
+    FntAuth,
+    RequestFunction,
+    RouteOptions,
+} from './Context';
 import Logger from './Logger';
+import { Delete, Get, Patch, Post, Put, Route } from './Route';
 
 /**
  *
@@ -11,8 +19,10 @@ import Logger from './Logger';
  */
 export class Controller {
     private readonly routes: Route[] = [];
+    private authFnt?: FntAuth;
     readonly router: Router;
     readonly endPoint: string;
+
     /**
      * Creates an instance of Controller.
      * @param {string} endPoint
@@ -21,7 +31,11 @@ export class Controller {
     constructor(endPoint: string) {
         this.endPoint = endPoint;
         this.router = Router();
-        Logger.debug(`Create controller : {${this.endPoint}}`);
+        Logger.debug(
+            `Create controller : ${this.authFnt !== undefined ? '🔒' : ''} {${
+                this.endPoint
+            }}`
+        );
     }
 
     /**
@@ -32,9 +46,21 @@ export class Controller {
      * @memberof Controller
      */
     addRoute(route: Route): Controller {
+        const controllerAuthFnt = this.authFnt;
+        if (controllerAuthFnt !== undefined) {
+            this.applyAuthMiddleware(route, controllerAuthFnt);
+        }
+        const routeAuthFnt = route.routeOptions.bearerAuthFnt;
+        if (controllerAuthFnt === undefined && routeAuthFnt !== undefined) {
+            this.applyAuthMiddleware(route, routeAuthFnt);
+        }
+        const routeIsAuth =
+            controllerAuthFnt !== undefined || routeAuthFnt !== undefined;
         route.registerOn(this.router);
         Logger.debug(
-            `Mapped route : ${route.constructor.name} - {${this.endPoint}${route.endPoint}}`
+            `${routeIsAuth ? '🔒 ' : ''}Mapped route : ${
+                route.constructor.name
+            } - {${this.endPoint}${route.endPoint}}`
         );
         this.routes.push(route);
         return this;
@@ -49,6 +75,32 @@ export class Controller {
      */
     addMiddleware(middleware: Middleware): Controller {
         this.router.use(middleware);
+        return this;
+    }
+
+    /**
+     *
+     *
+     * @private
+     * @param {Route} route
+     * @param {FntAuth} authFnt
+     * @memberof Controller
+     */
+    private applyAuthMiddleware(route: Route, authFnt: FntAuth): void {
+        route.setMiddlewares((req, res, next) =>
+            bearerAuth(req, res, next, route.routeOptions, authFnt)
+        );
+    }
+    /**
+     *
+     *
+     * @param {FntAuth} authFnt
+     * @return {*}  {Controller}
+     * @memberof Controller
+     */
+    enableBearerAuth(authFnt: FntAuth): Controller {
+        this.authFnt = authFnt;
+
         return this;
     }
 
@@ -92,7 +144,7 @@ export class Controller {
     post(
         endPoint: string,
         requestFunction: RequestFunction,
-        routeOption?: RouteOptions,
+        routeOption?: BodyRouteOptions,
         middlewares: Middleware[] = []
     ): Controller {
         const route = new Post(
@@ -119,7 +171,7 @@ export class Controller {
     put(
         endPoint: string,
         requestFunction: RequestFunction,
-        routeOptions?: RouteOptions,
+        routeOptions?: BodyRouteOptions,
         middlewares: Middleware[] = []
     ): Controller {
         const route = new Put(
@@ -146,7 +198,7 @@ export class Controller {
     patch(
         endPoint: string,
         requestFunction: RequestFunction,
-        routeOptions?: RouteOptions,
+        routeOptions?: BodyRouteOptions,
         middlewares: Middleware[] = []
     ): Controller {
         const route = new Patch(

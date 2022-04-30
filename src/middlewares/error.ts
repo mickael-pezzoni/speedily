@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+
 import { HttpError } from '../classes/HttpError';
 import Logger from '../classes/Logger';
 
@@ -25,7 +26,7 @@ export function logError(
  *
  * @export
  * @param {HttpError} err
- * @param {Request} _req
+ * @param {Request} req
  * @param {Response} res
  * @param {NextFunction} next
  */

@@ -1,4 +1,16 @@
-import { ExpressError, HttpResponseCode } from '../types';
+import { HttpResponseCode } from '../types/error.type';
+
+/**
+ *
+ *
+ * @export
+ * @interface ExpressError
+ */
+export interface ExpressError {
+    throwAt: Date;
+    msg: string;
+    httpCode: HttpResponseCode | number;
+}
 
 /**
  *
@@ -9,8 +21,26 @@ import { ExpressError, HttpResponseCode } from '../types';
  * @implements {ExpressError}
  */
 export class HttpError extends Error implements ExpressError {
+    /**
+     *
+     *
+     * @type {Date}
+     * @memberof HttpError
+     */
     throwAt: Date;
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof HttpError
+     */
     msg: string;
+    /**
+     *
+     *
+     * @type {(HttpResponseCode | number)}
+     * @memberof HttpError
+     */
     httpCode: HttpResponseCode | number;
 
     /**
@@ -33,7 +63,7 @@ export class HttpError extends Error implements ExpressError {
         if (httpCode === HttpResponseCode.INTERNAL_ERROR) {
             Error.captureStackTrace(this);
         }
-        Object.setPrototypeOf(this, this.constructor.prototype);
+        Object.setPrototypeOf(this, this.constructor.prototype as object);
     }
 }
 
