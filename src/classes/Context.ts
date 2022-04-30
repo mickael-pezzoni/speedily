@@ -33,9 +33,14 @@ export interface BodyRouteOptions extends RouteOptions {
     bodyValidator?: ClassValidator;
 }
 
+export interface ResponseWithCode {
+    status: number;
+    arg: unknown;
+}
+
 export type RequestFunction = (
     requestParams: Context
-) => Promise<unknown> | unknown;
+) => Promise<unknown | ResponseWithCode> | unknown | ResponseWithCode;
 
 export type FntAuth = (
     jwt: string,
