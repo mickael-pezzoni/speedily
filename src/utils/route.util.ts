@@ -8,7 +8,10 @@ import { makeError } from './error.util';
 function execRequestFunctionHashStatusCode(
     value: unknown
 ): value is ResponseWithCode {
-    return typeof value === 'object' && 'status' in (value as object);
+    return (
+        typeof value === 'object' &&
+        ['status', 'arg'].some((property) => property in (value as object))
+    );
 }
 
 /**
